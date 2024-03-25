@@ -16,6 +16,7 @@ jobs:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           HOSTNAME: ${{ secrets.SSH_HOST }}
           USER_NAME: ${{ secrets.USER_NAME }}
-          SCRIPT: ${{ secrets.MY_SECRET_SCRIPT }}
-      - name: Run script
-        run: ${SCRIPT}
+          SCRIPT: ${{ secrets.SECRET_SCRIPT }}
+      run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "${SCRIPT}"
