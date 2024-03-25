@@ -1,4 +1,5 @@
 name: Deploy
+
 on:
   push:
     branches:
@@ -16,7 +17,7 @@ jobs:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           HOSTNAME: ${{ secrets.SSH_HOST }}
           USER_NAME: ${{ secrets.USER_NAME }}
-          SCRIPT: ${{ secrets.SECRET_SCRIPT }}
-      run: |
+          SECRET_SCRIPT: ${{ secrets.SECRET_SCRIPT }}
+        run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "${SCRIPT}"
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} "${SECRET_SCRIPT}"
